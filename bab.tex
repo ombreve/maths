@@ -1,0 +1,124 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[french]{babel}
+\usepackage[np]{numprint}
+\usepackage{xspace}
+
+\usepackage[a4paper, includefoot, textwidth=6.5in, textheight=24.956cm,
+            hmarginratio=1:1, vmarginratio=1:1,
+            footnotesep=1.5\baselineskip]{geometry}
+\usepackage[explicit]{titlesec}
+\titleformat{\section}[runin]
+  {\normalfont\bfseries}
+  {\thesection.}{\wordsep}{#1.}
+\titlespacing{\section}{0pt}{*3}{*1.5}
+
+\usepackage{mathtools}
+\usepackage[warnings-off={mathtools-colon},
+            warnings-off={mathtools-overbracket},
+            math-style=french]{unicode-math}
+\usepackage{fontspec}
+\usepackage{microtype}
+
+\makeatletter
+\def\@maketitle{%
+  \begin{center}%
+    \let\footnote\thanks
+    {\bfseries \@title \par}%
+    \vskip .5em
+    \@author
+  \end{center}%
+  \par \vskip .5em}
+
+\newcommand{\N}{\ensuremath{\symbb{N}}\xspace}
+\newcommand{\Z}{\ensuremath{\symbb{Z}}\xspace}
+\newcommand{\Q}{\ensuremath{\symbb{Q}}\xspace}
+\AtBeginDocument{\let\ge\geqslant \let\le\leqslant}
+\makeatother
+
+\usepackage[unicode,hyperfootnotes=false,hidelinks]{hyperref}
+\hypersetup{%
+  pdftitle={Rudis indigestaque moles},
+  pdfauthor={Lionel Vidal}
+}
+\usepackage{bookmark}
+\title{Rudis indigestaque moles, ou (ru)bric-à-brac mathématique}
+\author{Lionel \bsc{V\kern-1pt idal}}
+
+\begin{document}
+\maketitle
+
+\section{Les trois deux}
+
+Comment représenter un nombre entier strictement positif quelconque avec
+seulement trois $2$ et des symboles mathématiques ?
+
+On écrit cet entier $N$ sous la forme :
+\[ N = -\log_2 \log_2 \sqrt{\sqrt{\ldots\sqrt{2}}} \]
+où le nombre de radicaux est égal au nombre entier voulu ! Une démonstration
+de cette formule serait à demander à un lycéen pour vérifier sa maîtrise des
+règles de calcul sur les logarithmes\dots
+
+\section{Question très bête}
+
+Quel est le triangle qui a la plus grande aire : celui de côtés $5$, $5$,
+$6$ ou celui de côtés $5$, $5$, $8$ ?
+
+\section{C'est sûrement vrai, j'ai fait de (très) nombreux tests}
+
+Pour tout $n\in\N$, les nombres $n^{17}+9$ et $(n+1)^{17}+9$ sont premiers
+entre eux... ou pas !
+Le premier contre-exemple\footnote{
+  Voir le livre, {\slshape Merveilleux nombres premiers}, de J.-P. Delahaye.}
+n'apparait que pour :
+\[ n = 8424432925592889329288197322308900672459420460792433\,. \]
+
+\section{Citation}
+
+Attribuée à Lipman Bers, sur mon objet mathématique préféré :
+\begin{quotation}\itshape\noindent
+  God, if She exists, created the natural numbers $\{0,1,2,\ldots\}$,
+  and compact Riemann surfaces. The rest of mathematics is man made.
+\end{quotation}
+
+\section{Citation}
+
+Jugement définitif de Robert A. Heinlein, qui montre que les auteurs de
+science-fiction ont une vision souvent très claire des mathématiques :
+\begin{quotation}\itshape\noindent
+  Anyone who cannot cope with mathematics is not fully human. At best, he
+  is a tolerable subhuman who has learned to wear his shoes, bathe, and
+  not make messes in the house.
+\end{quotation}
+
+\section{Un problème renversant}
+
+On fixe un point $I$ sur une sphère $S(O,r)$ de l'espace affine de dimension
+$3$, et on considère l'ensemble des tétraèdres $IABC$ inscrits dans la sphère
+et tri-rectangles en $I$. On demande\footnote{
+  Problème lu dans l'excellent polycopié,
+  {\slshape Compléments de géométrie}, de J.-M. Exbrayat.}
+le lieu du centre de gravité $G$ des triangles variables $ABC$\dots
+
+\smallskip
+En analytique, c'est cauchemardesque, mais c'est très simple si on pense
+à renverser le point de vue pour regarder la sphère depuis le fauteuil
+variable du repère orthonormé centré en $I$, qui suit les arêtes du
+tétraèdre.
+
+Dans ce repère, on a $A(\alpha,0,0)$, $B(0,\beta,0)$, $C(0,0,\gamma)$,
+où $\alpha$, $\beta$ et $\gamma$ sont trois réels.
+On a donc $G(\alpha/3, \beta/3, \gamma/3)$, et comme $O$ est à
+l'intersection des trois plans médiateurs des segments $[IA]$, $[IB]$ et
+$[IC]$, on a aussi $O(\alpha/2, \beta/2, \gamma/2)$.
+Mais $I$ et $O$ sont fixes, donc $G$ est fixe !
+
+\section{La suite des anciens}
+
+Moins de cinquante ans, passez votre chemin\dots{}
+Il s'agit de déterminer les nombres suivants de la suite :
+\[ 6 ;\quad 2;\quad 5;\quad 5; \quad4;\quad 5;\quad 6; \quad 3;\quad ? \]
+Impossible à trouver, mais sentant bon la nostalgie technologique :
+pensez au nombre de segments utilisés par un affichage électronique,
+en commençant par $0$\dots
+
+\end{document}

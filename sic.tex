@@ -1,0 +1,257 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[french]{babel}
+\usepackage{xspace}
+
+\usepackage[a4paper, includefoot, textwidth=6.5in, textheight=24.956cm,
+            hmarginratio=1:1, vmarginratio=1:1,
+            footnotesep=1.5\baselineskip]{geometry}
+\usepackage[explicit]{titlesec}
+\titleformat{\section}[runin]
+  {\normalfont\bfseries}
+  {\thesection.}{\wordsep}{#1.}
+\titlespacing{\section}{0pt}{*3}{*1.5}
+
+\usepackage{mathtools}
+\usepackage[warnings-off={mathtools-colon},
+            warnings-off={mathtools-overbracket},
+            math-style=french]{unicode-math}
+\usepackage{fontspec}
+\usepackage{microtype}
+
+\makeatletter
+\def\@maketitle{%
+  \begin{center}%
+    \let\footnote\thanks
+    {\bfseries \@title \par}%
+    \vskip .5em
+    \@author
+  \end{center}%
+  \par \vskip .5em}
+
+\renewenvironment{abstract}%
+  {\quotation\noindent\ignorespaces}%
+  {\endquotation}
+
+\newcommand{\R}{\ensuremath{\symbb{R}}\xspace}
+\newcommand{\g}{\ensuremath{\gamma}\xspace}
+\newcommand{\bg}{\ensuremath{b_{\gamma}}\xspace}
+\newcommand{\eg}{\ensuremath{\epsilon_{\gamma}}\xspace}
+\DeclareMathOperator{\sinc}{sinc}
+\DeclareMathOperator{\sign}{sign}
+\AtBeginDocument{\let\ge\geqslant \let\le\leqslant}
+\makeatother
+
+\usepackage[unicode,hyperfootnotes=false,hidelinks]{hyperref}
+\hypersetup{%
+  pdftitle={Les surprises du sinus cardinal},
+  pdfauthor={Lionel Vidal}
+}
+\usepackage{bookmark}
+\title{Les surprises du sinus cardinal}
+\author{Lionel \bsc{V\kern-1pt idal}}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+  Où une remarquable suite d'intégrales de sinus cardinaux\footnote{%
+    Voir l'article : {\slshape Some Remarkable Properties of Sinc and
+    Related Integrals}, de D.~Borwein et J.~M.~Borwein, dont on suit ici
+    une partie des développements.}
+  peut inciter, au mépris de toute prudence mathématique, à généraliser
+  hâtivement.
+\end{abstract}
+
+\section{Une suite peu commune}
+
+On définit sur \R la fonction continue, dite sinus cardinal, par :
+\[
+  \sinc(x) \coloneq
+  \begin{cases}
+    \dfrac{\sin x}{x}, & \text{si $x\neq 0$ ;} \\
+    1,                & \text{si $x=0$.}
+  \end{cases}
+\]
+Un logiciel de calcul formel donne alors :
+\begin{gather*}
+  \int_0^\infty \sinc(x)\,dx
+    = \frac{\pi}{2} \,, \\
+  \int_0^\infty \sinc(x)\sinc\left(\frac{x}{3}\right)\,dx
+    = \frac{\pi}{2} \,, \\
+  \int_0^\infty \sinc(x)\sinc\left(\frac{x}{3}\right)
+    \sinc\left(\frac{x}{5}\right)\,dx
+    = \frac{\pi}{2} \,, \\
+  \vdots \\
+  \int_0^\infty \sinc(x)\sinc\left(\frac{x}{3}\right)
+    \sinc\left(\frac{x}{5}\right)\ldots
+    \sinc\left(\frac{x}{13}\right)\,dx
+    = \frac{\pi}{2} \,,
+\end{gather*}
+La valeur constante est déjà très remarquable, mais le plus
+extraordinaire est à venir :
+\[
+  \int_0^\infty \sinc(x)\sinc\left(\frac{x}{3}\right)
+    \sinc\left(\frac{x}{5}\right)\ldots
+    \sinc\left(\frac{x}{15}\right)\,dx
+  = \frac{467807924713440738696537864469}{935615849440640907310521750000}
+    \pi \,.
+\]
+Il semble que le logiciel ait un sérieux {\it bug}\dots{}
+Sinon, comment expliquer une valeur aussi inattendue ?
+
+\section{Préliminaires}
+
+Soient $a_0$, $a_1$, $\ldots$, $a_n$ des nombres réels, avec $n\ge 1$.
+Pour chacun des $2^n$ $n$-uplets
+$\g=(\g_1, \ldots, \g_n) \in \{-1;1\}^n$, on définit :
+\[
+  \bg \coloneq a_0 + \sum_{k=1}^{n} \g_k\,a_k\,,\quad\text{et}\quad
+  \eg \coloneq \prod_{k=1}^{n} \g_k \,.
+\]
+
+Par simple développement de produit, on remarque alors que :
+\[
+  e^{a_0 x}\prod_{k=1}^n (e^{a_k x}-e^{-a_k x})
+  = \sum_\g \eg\,e^{\bg x} \,.
+\]
+
+Mais d'une part, quand $x$ tend vers $0$, on a :
+\[
+  e^{a_0 x} = 1 + O(x) \,,\quad\text{et}\quad
+  e^{a_k x}-e^{-a_k x} = 2a_k x + O(x^2) \,;
+\]
+et donc :
+\[
+  e^{a_0 x}\prod_{k=1}^n (e^{a_k x}-e^{-a_k x})
+  = 2^n \left(\prod_{k=1}^{n}a_k\right)x^n + O(x^{n+1}) \,.
+\]
+
+D'autre part, toujours quand $x$ tend vers $0$, on a :
+\[
+  \sum_\g \eg\,e^{\bg x}=\left(\sum_\g \eg\right) +
+  \left(\sum_\g \eg\,\bg\right)\frac{x}{1!} + \ldots +
+  \left(\sum_\g \eg\,\bg^n\right)\frac{x^n}{n!} + O(x^{n+1}) \,.
+\]
+
+D'où, par identification des coefficients :
+\begin{equation}\label{eq:sumegbg}
+  \sum_\g \eg\,\bg^r =
+  \begin{cases}
+    0\,, & \text{pour $r=0$, $\ldots$, $n-1$ ;} \\
+    2^n\,n! \displaystyle\prod_{k=1}^{n}a_k\,, & \text{pour $r=n$.}
+  \end{cases}
+\end{equation}
+
+En utilisant la même remarque que précédemment, on a aussi :
+\begin{align*}
+  \prod_{k=0}^n \sin(a_k x) &= \frac{1}{(2i)^{n+1}}
+    (e^{ia_0 x}-e^{-ia_0 x})\prod_{k=1}^n (e^{ia_k x}-e^{-ia_k x}) \\
+  &= \frac{1}{(2i)^{n+1}} \sum_\g \eg(e^{i\bg x}-(-1)^n e^{-i\bg x}) \\
+  &= \frac{1}{2^{n+1}} e^{-i(n+1)\frac{\pi}{2}}
+     \sum_\g \eg(e^{i\bg x}+e^{-i(\bg x-(n+1)\pi)}) \\
+  &= \frac{1}{2^{n+1}} \sum_\g \eg(e^{i(\bg x-(n+1)\frac{\pi}{2})} +
+     e^{-i(\bg x-(n+1){\pi\over2})}) \,,
+\end{align*}
+et donc finalement :
+\begin{equation}\label{eq:prodsin}
+  \prod_{k=0}^n \sin(a_k x) =
+  \frac{1}{2^n}\sum_\g \eg\cos\left(\bg x-(n+1)\frac{\pi}{2}\right)\,.
+\end{equation}
+
+\section{Intégration}
+
+Maintenant que l'on sait, grâce à (\ref{eq:prodsin}), transformer un produit
+de sinus en somme, on peut s'essayer à son intégration !
+On écrit :
+\[
+  \int_0^\infty\prod_{k=0}^n \frac{\sin(a_k x)}{x}\,dx =
+  \frac{1}{2^n}\int_0^\infty \frac{1}{x^{n+1}}C_n(x)\,dx\,,
+  \quad\text{où}\quad
+  C_n(x) \coloneq \sum_\g \eg\cos\left(\bg x-(n+1)\frac{\pi}{2}\right)\,.
+\]
+
+La fonction $C_n$ est entière, bornée sur $\R$, et admet un zéro d'ordre
+$n+1$ en $x=0$. On peut donc intégrer $n$ fois par parties le membre
+de droite de la dernière égalité en garantissant la convergence des
+intégrales successives :
+\begin{align*}
+  \int_0^\infty \frac{1}{x^{n+1}}C_n(x)\,dx
+  &= -\int_0^\infty - \frac{1}{nx^n}
+     \left(\sum_\g-\eg\,\bg\sin\left(\bg x-(n+1)\frac{\pi}{2}\right)\right)
+     \,dx \\
+  &= \frac{1}{n}\int_0^\infty \frac{1}{x^n}
+     \left(\sum_\g \eg\,\bg\cos\left(\bg x-n\frac{\pi}{2}\right)\right)
+     \,dx \\
+  &= \frac{1}{n}\int_0^\infty \frac{1}{x^n} C_{n-1}(x)\,dx \\
+  &\vdots \\
+  &= \frac{1}{n!}\int_0^\infty \frac{1}{x} C_0(x)\,dx \\
+  &= \frac{1}{n!}\int_0^\infty \frac{1}{x}
+     \left(\sum_\g \eg\,\bg^n\cos\left(\bg x-\frac{\pi}{2}\right)\right)
+     \,dx \\
+  &= \frac{1}{n!}\sum_\g \eg\,\bg^n \int_0^\infty \frac{\sin(\bg x)}{x}
+     \,dx \,.
+\end{align*}
+
+On suppose connu le résultat classique :
+\[
+  \int_0^\infty \frac{\sin(x)}{x}\,dx = \frac{\pi}{2}\,,
+  \quad\text{d'où}\quad
+  \int_0^\infty \frac{\sin(\bg x)}{x}\,dx = \frac{\pi}{2}\sign(\bg) \,,
+\]
+où la fonction $\sign$ est définie par :
+\[
+  \sign(x) \coloneq
+  \begin{cases}
+    1  & \text{si $x>0$,} \\
+    0  & \text{si $x=0$,} \\
+    -1 & \text{si $x<0$.}
+  \end{cases}
+\]
+
+D'où finalement la jolie formule :
+\begin{equation}\label{eq:result}
+  \left(\prod_{k=0}^n a_k\right)
+  \int_0^\infty \prod_{k=0}^n \sinc(a_k x)\,dx =
+  \frac{\pi}{2}\frac{1}{2^n n!}\sum_\g \eg\,\bg^n\sign(\bg) \,.
+\end{equation}
+
+\section{Application}
+
+On choisit maintenant :
+\[
+  a_0=1,\quad a_1=\frac{1}{3},\quad a_2=\frac{1}{5},
+  \quad\ldots,\quad \text{et }  a_7=\frac{1}{15} \,.
+\]
+
+Remarquons que :\quad $a_1+a_2+\cdots+a_6<a_0<a_1+a_2+\cdots+a_7$.
+
+\medskip
+Pour $1\le n\le6$, on a donc $\bg>0$, pour tout $\g$.
+En utilisant les relations (\ref{eq:sumegbg}) et (\ref{eq:result}),
+et comme $a_0=1$, on obtient alors les premières valeurs
+de la suite initiale :
+\[
+  \int_0^\infty\prod_{k=0}^n \sinc(a_k x)\,dx = \frac{\pi}{2} \,,\quad
+  \text{pour $n=0$, $1$, $\ldots$, $6$}\,.
+\]
+
+\medskip
+Pour $n=7$, on a également $\bg>0$, pour tout $\g$ sauf pour
+$\g':=(-1,\ldots,-1)$. En utilisant la relation (\ref{eq:sumegbg}),
+et comme $\epsilon_{\g'}=-1$, on a :
+\[
+  \sum_\g \eg\,\bg^7\sign(\bg) =
+  \sum_\g \eg\,\bg^7 - 2\epsilon_{\g'}\,b_{\g'}^7 =
+  2^7 7! \prod_{k=1}^7 a_k + 2(a_0-a_1-\ldots-a_7)^7\,.
+\]
+
+Finalement, en utilisant la relation (\ref{eq:result}), et comme $a_0=1$,
+on obtient :
+\[
+  \int_0^\infty\prod_{k=0}^7 \sinc(a_k x)\,dx = \pi \left(\frac{1}{2}
+  +\frac{(1-a_1-a_2-\cdots-a_7)^7}{2^7 7!\,a_1a_2\ldots a_7}\right)\,.
+\]
+
+Voilà qui explique la monstrueuse fraction de la dernière valeur de la
+suite initiale !
+
+\end{document}

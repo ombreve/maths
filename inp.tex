@@ -1,0 +1,415 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[french]{babel}
+\usepackage[np]{numprint}
+\usepackage{xspace}
+
+\usepackage[a4paper, includefoot, textwidth=6.5in, textheight=24.956cm,
+            hmarginratio=1:1, vmarginratio=1:1,
+            footnotesep=1.5\baselineskip]{geometry}
+\usepackage[explicit]{titlesec}
+\titleformat{\section}[runin]
+  {\normalfont\bfseries}
+  {\thesection.}{\wordsep}{#1.}
+\titlespacing{\section}{0pt}{*3}{*1.5}
+
+\usepackage{mathtools}
+\usepackage[warnings-off={mathtools-colon},
+            warnings-off={mathtools-overbracket},
+            math-style=french]{unicode-math}
+\usepackage{fontspec}
+\usepackage{microtype}
+
+\makeatletter
+\def\@maketitle{%
+  \begin{center}%
+    \let\footnote\thanks
+    {\bfseries \@title \par}%
+    \vskip .5em
+    \@author
+  \end{center}%
+  \par \vskip .5em}
+
+\renewenvironment{abstract}%
+  {\quotation\noindent\ignorespaces}%
+  {\endquotation}
+
+\newcommand{\N}{\ensuremath{\symbb{N}}\xspace}
+\newcommand{\Z}{\ensuremath{\symbb{Z}}\xspace}
+\newcommand{\Q}{\ensuremath{\symbb{Q}}\xspace}
+\newcommand{\ip}{\ensuremath{\symfrak{p}}\xspace}
+\newcommand{\ia}{\ensuremath{\symfrak{a}}\xspace}
+\newcommand{\im}{\ensuremath{\symfrak{m}}\xspace}
+\AtBeginDocument{\let\ge\geqslant \let\le\leqslant}
+\makeatother
+
+\usepackage[unicode,hyperfootnotes=false,hidelinks]{hyperref}
+\hypersetup{%
+  pdftitle={Infinité des nombres premiers},
+  pdfauthor={Lionel Vidal}
+}
+\usepackage{bookmark}
+\title{Infinité des nombres premiers}
+\author{Lionel \bsc{V\kern-1pt idal}}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+  Où quelques démonstrations de l'infinité des nombres premiers servent
+  de prétextes à des digressions mathématiques que l'on espère, c'est le
+  seul enjeu, esthétiques.
+\end{abstract}
+
+\section{Euclide}
+
+La plus ancienne démonstration connue de l'infinité des nombres premiers
+est due à Euclide : s'il n'y a qu'un nombre fini $r$ de nombres premiers,
+et sachant qu'il en existe au moins un, on peut construire le nombre
+$n=p_1\ldots p_r+1$. Ce nombre est supérieur à $1$, donc il admet un
+diviseur premier~$p$. Mais si $p$ était l'un des $p_i$, il diviserait le
+produit $p_1\ldots p_r$ et $n$, donc $1$, ce qui est absurde.
+
+Le nombre $p_1\ldots p_r+1$ n'est pas nécessairement premier (par exemple
+$2\times\ldots\times 13+1=30031=59\times509$), mais est premier avec chaque
+premier de l'ensemble supposé fini. De multiples constructions d'un tel
+nombre sont possibles et proposent de nouvelles démonstrations se ramenant
+\emph{in fine} à l'idée originelle d'Euclide.
+
+\medskip
+Par exemple,\footnote{%
+  Preuve de S.~Northshield, {\slshape American Mathematical Monthly\/} (2015).}
+si les nombres premiers sont en nombre fini :
+\[
+  0 < \prod_p \sin \left(\frac{\pi}{p}\right)
+  = \prod_p \sin\left(\frac{\pi(1+2\prod_{p'}p')}{p}\right) = 0\;.
+\]
+L'inégalité est vraie car les facteurs du produit sont strictement
+positifs ; la première égalité est vraie car le produit de tous les premiers
+$p'$ est divisible par $p$ et donc l'argument du sinus est congru à $\pi/p$
+modulo~$2\pi$ ; et la dernière égalité est vraie car l'entier au numérateur
+est divisible par un nombre premier et donc au moins un terme du produit est
+nul !
+
+\medskip
+Un formalisme élégant\footnote{
+  Preuve de H.~Furstenberg, {\slshape American Mathematical Monthly\/} (1955).}
+peut éviter une construction explicite :
+on définit sur \Z une topologie en considérant comme ouverts l'ensemble
+vide et tout ensemble d'entiers~$\symcal{O}$, tel que pour tout
+$a\in\symcal{O}$, il existe une progression arithmétique $\symcal{A}$
+telle que $a\in\symcal{A}\subset\symcal{O}$. En effet :
+\begin{itemize}
+\item l'ensemble vide et $\Z=0+1\Z$ sont ouverts ;
+\item une union d'ouverts est trivialement ouverte ;
+\item une intersection finie d'ouverts est ouverte car si
+  $a\in\bigcap_{i=1}^n \symcal{O}_i$, il existe $n$ entiers $m_i\in\N^*$,
+    tel que $a+m_i\Z\subset\symcal{O}_i$,
+    et donc $a+m_1\ldots m_n\Z \subset \bigcap_{i=1}^n \symcal{O}_i$.
+\end{itemize}
+\smallskip
+Pour cette topologie, les progressions arithmétiques sont évidemment
+ouvertes mais aussi fermées :
+\[
+  \forall a\in\Z, \forall m\in\N^*,
+  a+m\Z = \Z\;\backslash\bigcup_{i=1}^{m-1}(a+i+m\Z) \;.
+\]
+Si les nombres premiers sont en nombre fini, alors l'ensemble $\bigcup p\Z$
+est fermé comme union finie de fermés. Mais comme tout nombre différent de
+$1$ et $-1$ admet un diviseur premier, le complémentaire de cet ensemble est
+$\{-1; 1\}$ qui n'est pas un ouvert.
+
+Le point clé de cette preuve est le fait que
+$\bigcap_p (\Z\,\backslash\,p\Z) = \{-1; 1\}$ ne contient pas de progression
+arithmétique. Si les nombres premiers étaient en nombre fini $r$,
+cet ensemble contiendrait la progression $(1+p_1\ldots p_r) \Z$, chaque $p_i$
+étant premier avec $1+p_1\ldots p_r$ : on retrouve Euclide !
+
+\section{Pierre de Fermat}
+
+Une autre idée est de construire une suite infinie de nombres premiers entre
+eux deux à deux : chacun de ces nombres admet alors au moins un facteur
+premier qui n'est commun à aucun des autres, et on en déduit l'existence
+d'une infinité de nombres premiers.
+
+Par exemple, les nombres de Fermat $F_n=2^{2^n}+1$ sont premiers entre eux
+deux à deux. En effet, pour $n\ge 1$ :
+\[
+  F_n=\prod_{d=0}^{n-1}F_d+2 \;.
+\]
+Mais alors, si $p$ est un diviseur premier commun de $F_d$ et $F_n$,
+$p$ divise $2$, donc vaut $2$, ce qui contredit l'imparité des $F_n$.
+
+\smallskip
+La formule précédente se montre par une récurrence très simple :
+$F_1=5=F_0+2$ et
+\[
+  \prod_{d=0}^n F_d = \left(\prod_{d=0}^{n-1}F_d\right) F_n
+  = (F_n-2)F_n = (2^{2^n}-1)(2^{2^n}+1) = 2^{2^{n+1}}-1 = F_{n+1}-2 \;.
+\]
+
+Toute démonstration aurait été inutile si, comme le pensait Fermat, les
+$F_n$ étaient tous premiers. C'est vrai pour $F_0=3$, $F_1=5$, $F_2=17$,
+$F_3=257$ et $F_4=\np{65 537}$, mais $F_5=641\times \np{6 700 417}$.
+On ne connait d'ailleurs, à ce jour, aucun nombre de Fermat premier
+autre que ceux juste cités.
+
+\section{Marin Mersenne et Joseph-Louis Lagrange}
+
+À partir d'un nombre premier quelconque, si l'on parvient à exhiber un
+autre premier strictement plus grand, on aura prouvé l'infinité de ces
+nombres. Soit donc $p$ un nombre premier et $q$ un facteur premier du nombre
+de Mersenne $2^p-1$. On a donc $2^p\equiv 1\pod{q}$, et comme $p$ est
+premier, $2$ est d'ordre $p$ dans le sous-groupe multiplicatif $(\Z/q\Z)^*$
+du corps $\Z/q\Z$. Mais d'après le théorème de Lagrange, l'ordre de
+l'élément d'un groupe divise l'ordre de ce groupe, soit $p\mid (q-1)$. Et
+donc $p<q$.
+
+\section{Leonhard Euler}
+
+En 1737, Euler montre que la série des inverses des nombres premiers,
+\[
+  \frac{1}{2}+\frac{1}{3}+\frac{1}{5}+\frac{1}{7}+\frac{1}{11}+\cdots
+\]
+est divergente, ce qui montre bien plus que l'infinité des nombres premiers :
+cela donne une idée de leur \emph{densité} dans l'ensemble des entiers.
+Ils sont plus denses par exemple que les carrés, au sens où la série des
+inverses des carrés converge.
+
+Pour tout entier $n\ge 2$, notons :
+\[
+  P_n \coloneq \prod_{p\le n}\frac{1}{1-\frac{1}{p}}
+  = \prod_{p\le n}\left(1+\frac{1}{p}+\frac{1}{p^2}+\cdots\right) \;.
+\]
+
+Comme tout entier naturel non nul se décompose de manière unique, à
+l'ordre près, en produit de facteurs premiers, les termes du développement
+de $P_n$ comprennent l'inverse de chaque entier $k\le n$ ; en notant $q$ le
+plus grand premier inférieur ou égal à $n$, il vient :
+\begin{align*}
+ P_n &= \left(1+\frac{1}{2}+\frac{1}{2^2}+\cdots\right)
+        \left(1+\frac{1}{3}+\frac{1}{3^2}+\cdots\right)\ldots
+        \left(1+\frac{1}{q}+\frac{1}{q^2}+\cdots\right) \\
+     &= 1+\frac{1}{2}+\frac{1}{3}+\frac{1}{2\times2}+\frac{1}{5}+
+        \frac{1}{2\times3}+\frac{1}{7}+\cdots
+      > \sum_{k=1}^n \frac{1}{k} > \int_1^n \frac{dx}{x} = \log n \;.
+\end{align*}
+D'où $\displaystyle\lim_{n\to+\infty}P_n=+\infty$,
+et donc déjà l'infinité des nombres premiers ! De plus :
+\[
+  \log(\log n) < \log P_n
+  = \sum_{p\le n} \log\left(1+\frac{1}{p}+\frac{1}{p^2}+\cdots\right)
+  \le \sum_{p\le n} \left(\frac{1}{p}+\frac{1}{p^2}+\cdots\right)
+  = \sum_{p\le n} \frac{1}{p} + R_n \;,
+\]
+où $R_n$ est défini par :
+\begin{align*}
+  R_n &\coloneq \sum_{p\le n} \left(\frac{1}{p^2}+\cdots\right)
+      = \sum_{p\le n} \frac{1}{p^2}\left(1+\frac{1}{p}+\cdots\right)
+      = \sum_{p\le n} \frac{1}{p^2}\frac{1}{1-\frac{1}{p}}
+      = \sum_{p\le n} \frac{1}{p(p-1)} \\
+      &\le \sum_{k=2}^n \frac{1}{k(k-1)}
+      = \sum_{k=2}^n \left(\frac{1}{k-1}-\frac{1}{k}\right)
+      = 1-\frac{1}{n} < 1 \;.
+\end{align*}
+D'où finalement :
+$\displaystyle\log(\log n) - 1 < \sum_{p\le n} \frac{1}{p}\;$,
+ce qui montre que la série $\displaystyle\sum\frac{1}{p}$ diverge.
+
+\section{Euler encore, revu par Paul Erd\H{o}s}
+
+Donnons une autre belle preuve, inventée par Erd\H{o}s, de la divergence
+de la série des inverses des nombres premiers.
+
+Soient $p_1$, $p_2$, $\ldots$, les nombres premiers en ordre
+croissant. Supposons que la série de leurs inverses soit convergente.
+Il existe alors un entier naturel $k$ tel que :
+\[
+  \sum_{i\ge k+1} \frac{1}{p_i} < \frac{1}{2} \;.
+\]
+On appellera $p_1$, $\ldots$, $p_k$, les \emph{petits} nombres premiers, et
+$p_{k+1}$, $p_{k+2}$, $\ldots$, les \emph{grands} nombres premiers. Soit $N$
+un nombre entier naturel non nul. On note $G$ le nombre d'entiers naturels
+$n\le N$ divisibles par au moins un grand nombre premier et $P$ le nombre
+d'entiers naturels $n\le N$ qui n'ont que des petits diviseurs premiers
+(ainsi $0$ est compté dans $G$ et $1$ n'est pas compté).
+
+Majorons alors $G$ et $P$.
+
+D'une part, $\lfloor N/p_i\rfloor$ dénombre les entiers $n\le N$
+qui sont des multiples de $p_i$. D'où :
+\[
+  G \le \sum_{i\ge k+1} \left\lfloor\frac{N}{p_i}\right\rfloor
+    \le \sum_{i\ge k+1} \frac{N}{p_i} < \frac{N}{2} \;.
+\]
+
+D'autre part, tout entier $n\le N$ qui n'admet que des petits
+diviseurs premiers peut s'écrire $n=a_n b_n^2$, où $a_n$ est sans facteur
+carré et donc produit, éventuellement vide, de petits nombres premiers
+deux à deux distincts. Il y a donc $2^k$ facteurs possibles pour $a_n$,
+et comme $b_n\le\sqrt{N}$ :
+\[
+  P \le 2^k \sqrt{N} \;.
+\]
+
+D'où : $\displaystyle G+P=N < \frac{N}{2} + 2^k \sqrt{N}$, soit
+$\sqrt{N}<2^{k+1}$, ce qui contredit le choix arbitraire de~$N$.
+
+\section{Euler toujours, et la fonction de Zéta de Bernhard Riemann}
+
+\[
+  \prod_p \frac{1}{1-\frac{1}{p^2}} = \zeta(2) = \frac{\pi^2}{6}
+\]
+
+Le membre de droite est irrationnel, donc le produit de gauche a un
+nombre infini de termes !
+
+\smallskip
+La fonction Zéta de Riemann est définie sur $]1, +\infty[$ par
+$\displaystyle\zeta(x) \coloneq \sum_{n=1}^{+\infty} \frac{1}{n^x}$.
+Comme pour $s>1$,
+\[
+  \frac{1}{1-\frac{1}{p^s}} = 1+\frac{1}{p^s}+\frac{1}{p^{2s}}+
+                              \frac{1}{p^{3s}}+\cdots \;,
+\]
+en considérant tous les nombres premiers $p$ inférieurs à un nombre premier
+$q$ fixé :
+\[
+  \left\vert\zeta(s)-\prod_{p\le q} \frac{1}{1-\frac{1}{p^s}}\right\vert
+  < \sum_{n=q+1}^{+\infty} \frac{1}{n^s} \;.
+\]
+En effet, comme chaque entier se décompose de façon unique en produit de
+facteurs premiers, le produit partiel, une fois développé en utilisant la
+relation précédente, ne comprend que des termes de type $n^{-s}$, où $n$
+est un produit de premiers au plus égaux à $q$. Donc seuls les entiers
+plus grands que $q$ peuvent ne pas apparaître dans le produit partiel,
+ce qui justifie l'inégalité.
+La valeur absolue précédente tend vers $0$ quand $q$ tend vers l'infini,
+et donc pour tout $s>1$ :
+\[
+  \prod_p \frac{1}{1-\frac{1}{p^s}} = \zeta(s) \;.
+\]
+
+Déterminons maintenant la valeur de $\zeta(2)$. Pour une preuve courte,
+sortons l'artillerie lourde : dans l'espace de Hilbert $L^2[0,1]$ muni de
+la base orthonormée $(e_n(x)=\exp(2i\pi n x))_{n\in\Z}$, on applique à la
+fonction identité la formule de Parseval :
+\[
+  \langle f,f\rangle=\sum_{n\in\Z}\vert\langle f,e_n\rangle\vert^2 \;
+  \mbox{, où }\; \langle f,g\rangle \coloneq \int_0^1f\bar g \;.
+\]
+
+On calcule très facilement :
+\begin{gather*}
+  \langle f,f \rangle = \int_0^1 x^2\,dx = \frac{1}{3} \;,\quad
+  \langle f,e_0 \rangle = \int_0^1 x\,dx = \frac{1}{2} \;, \\
+  \mbox{et pour $n$ non nul, }
+  \langle f,e_n \rangle = \int_0^1 x e^{-2i\pi n x}\,dx
+  =\left[x\frac{e^{-2i\pi n x}}{-2i\pi n}\right]_0^1
+  -\underbrace{\int_0^1 \frac{e^{-2i\pi n x}}{-2i\pi n}\,dx}_{=0}
+  =-\frac{1}{2i\pi n} \,.
+\end{gather*}
+D'où\quad
+$\displaystyle\frac{1}{3}=\frac{1}{4}+\sum_{n\in\Z^*}\frac{1}{4\pi^2 n^2}$,
+\quad et donc :\quad
+$\displaystyle\zeta(2)=\sum_{n=1}^{+\infty} \frac{1}{n^2}=\frac{\pi^2}{6}$.
+
+\medskip
+Pour être complet, il faudrait enore démontrer que $\pi^2$ est
+irrationnel\dots{} ce qui sera admis ici !
+
+\section{Dénombrement}
+
+Peut-être la démonstration la plus naturelle : on compte le nombre de
+décompositions possibles en produit de facteurs premiers plus petits qu'un
+entier donné. Si on note $\pi(n)$ le nombre de nombres premiers inférieurs
+ou égaux à $n$, et $p_1$, $p_2$, $\ldots$, les nombres premiers en ordre
+croissant, tout entier $k$, $0<k\le n$, s'écrit :
+\[
+  k = \prod_{i=1}^{\pi(n)} p_i^{e_i}\;,
+  \mbox{\enspace où pour tout $i$, $e_i$ est un entier naturel.}
+\]
+D'où : $\displaystyle\sum_{i=1}^{\pi(n)} e_i\log p_i \le\log n$,
+et grossièrement,
+$\displaystyle  e_i\le\frac{\log n}{\log p_i} \le \log_2 n$.
+En dénombrant alors toutes les décompositions, chaque $p_i$ offre
+au plus $\log_2 n$ choix, et donc
+$\displaystyle n \le (\log_2 n + 1)^{\pi(n)}$. On en déduit :
+\[
+  \pi(n) \ge \frac{\log n}{\log(\log_2 n +1)}\;,\quad\mbox{et donc :}\quad
+  \lim_{n\to+\infty}\pi(n) = +\infty\;.
+\]
+
+\section{Richard Dedekind}
+
+Pour finir, montons de quelques barreaux sur l'échelle de Jacob\dots
+
+\noindent
+Beaucoup d'anneaux d'entiers de corps de nombres ne sont pas factoriels,
+et leurs éléments n'admettent donc pas une unique décomposition en produit de
+facteurs premiers. Pour pallier cet inconvénient, dans le cadre de travaux
+sur l'équation de Fermat, Dedekind développe la notion d'anneau,
+dit de Dedekind, plus général qu'un anneau principal :
+\begin{quotation}
+  \noindent\itshape
+  un anneau de Dedekind est un anneau Nœthérien, intégralement clos,
+  dans lequel tout idéal premier non nul est maximal.
+\end{quotation}
+
+\noindent
+On montre que dans un tel anneau, tous les \emph{idéaux} admettent une
+unique décomposition en \emph{idéaux premiers}, et que tout anneau
+d'entiers de corps de nombres est un anneau de Dedekind.
+
+\medskip
+Considérons alors un anneau de Dedeking $R$ qui n'admette qu'un nombre fini
+d'idéaux premiers non nuls, $\ip_1$, $\dots$, $\ip_n$, et montrons que dans
+ce cas, $R$ est principal.
+
+En notant $R_{\ip_1}$ le localisé de $R$ en $\ip_1$, comme le module
+$\ip_1R_{\ip_1}$ est non nul, d'après le lemme de Nakayama,
+$\ip_1^2 R_{\ip_1} \subsetneq \ip_1 R_{\ip_1}$,
+et donc $\ip_1^2 \subsetneq \ip_1$.
+Soit alors $y_1\in\ip_1\backslash\,\ip_1^2$.
+
+Remarquons que si $\ia$ et $\im$ sont des idéaux de $R$, tels que
+$\ia\not\subset\im$ et que $\im$ soit maximal, alors $\ia+\im=R$ et
+les idéaux $\ia$ et $\im$ sont premiers entre eux.
+Comme $\ip_2$, $\dots$, $\ip_n$ sont maximaux, les idéaux
+$\ip_1^2$, $\ip_2$, $\dots$, $\ip_n$ sont donc premiers entre eux
+deux à deux.
+D'après le lemme des restes chinois, il existe alors $x_1\in R$, tel que
+$x_1\equiv y_1 \pod{\ip_1^2}$, et $x_1\equiv 1 \pod{\ip_k}$,
+pour $2 \le k \le n$.
+
+Comme $R$ est de Dedekind, $\langle x_1\rangle$ se décompose en
+$\langle x_1\rangle=\ip_1^{e_1}\dots\ip_n^{e_n}$, où $e_1$, $\dots$, $e_n$
+sont des entiers naturels.
+Mais pour $2\le k\le n$, $x_1\not\in\ip_k$, donc $e_k=0$.
+De plus, comme $x_1\in\ip_1\backslash\,\ip_1^2$, on a $e_1=1$.
+D'où $\ip_1=\langle x_1\rangle$ et $\ip_1$ est donc principal.
+On montre de même que $\ip_2$, $\dots$, $\ip_n$ sont principaux.
+
+Mais tout idéal $\ia$ de $R$ se décompose en
+$\ia=\ip_1^{a_1}\dots\ip_n^{a_n}=
+ \langle x_1\rangle^{a_1}\dots\langle x_n\rangle^{a_n}=
+ \langle x_1^{a_1}\dots x_n^{a_n}\rangle$,
+et l'anneau $R$ est donc principal.
+
+\medskip
+Considérons alors l'anneau $\Z[\sqrt{-5}]$, anneau de Dedekind des entiers
+de $\Q[\sqrt{-5}]$. L'élément $1+\sqrt{-5}$ est irréductible, car la norme
+d'un de ses diviseurs non trivial devrait être un diviseur non trivial de sa
+norme 6, et les équations $a^2+5b^2=2$ et $a^2+5b^2=3$ n'ont pas de solution
+dans~$\Z$.
+
+Mais comme $(1+\sqrt{-5})(1-\sqrt{-5})=2\times3$, l'anneau $\Z[\sqrt{-5}]$
+n'est pas principal, car sinon l'élément $1+\sqrt{-5}$ irréductible
+diviserait $2$ ou $3$, et en prenant les normes, $6$ diviserait $4$ ou $9$.
+
+Donc d'après ce qui précède, les nombres premiers sont en nombre infini !
+
+\medskip
+C'est ma preuve préférée : moralement, il est nécessaire que les nombres
+premiers soient en nombre infini pour que la théorie des nombres soit
+aussi intéressante et complexe !
+
+\end{document}

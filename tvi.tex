@@ -1,0 +1,214 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[french]{babel}
+\usepackage{xspace}
+
+\usepackage[a4paper, includefoot, textwidth=6.5in, textheight=24.956cm,
+            hmarginratio=1:1, vmarginratio=1:1,
+            footnotesep=1.5\baselineskip]{geometry}
+
+\usepackage{mathtools}
+\usepackage[warnings-off={mathtools-colon},
+            warnings-off={mathtools-overbracket},
+            math-style=french]{unicode-math}
+\usepackage{fontspec}
+\usepackage{microtype}
+
+\makeatletter
+\def\@maketitle{%
+  \begin{center}%
+    \let\footnote\thanks
+    {\bfseries \@title \par}%
+    \vskip .5em
+    \@author
+  \end{center}%
+  \par \vskip .5em}
+
+\renewenvironment{abstract}%
+  {\quotation\noindent\ignorespaces}%
+  {\endquotation}
+
+\newcommand{\N}{\ensuremath{\mathbb{N}}\xspace}
+\newcommand{\R}{\ensuremath{\mathbb{R}}\xspace}
+\AtBeginDocument{\let\ge\geqslant \let\le\leqslant}
+\newcommand{\proclaim}[1]{\medskip\noindent{\bfseries #1.}\enspace}
+\newcommand{\proof}{\medskip\noindent{\slshape Démonstration}.\enspace}
+\makeatother
+
+\usepackage[unicode,hyperfootnotes=false,hidelinks]{hyperref}
+\hypersetup{%
+  pdftitle={Théorème des valeurs intermédiaires et base 13},
+  pdfauthor={Lionel Vidal}
+}
+\usepackage{bookmark}
+
+\title{Théorème des valeurs intermédiaires et base 13}
+\author{Lionel \bsc{V\kern-1pt idal}}
+\begin{document}
+\maketitle
+\begin{abstract}
+  Où une remarquable fonction, définie par un détour en base $13$, sert de
+  contre-exemple fort à la réciproque du théorème des valeurs intermédiaires.
+\end{abstract}
+
+\bigskip
+Voici comment Frédéric Testard présente le théorème des valeurs intermédiaires,
+dans son remarquable livre, {\slshape Analyse mathématique, la maîtrise de
+l'implicite} :
+\begin{quotation}\itshape
+\noindent
+Élémentaire par son caractère intuitif, [\dots], mais profond dans sa preuve
+qui, quoique simple, s'appuie sur la propriété topologique la plus importante
+de $\R$ : la complétude, et profond aussi dans ces conséquences, car c'est lui
+qui garantit l'existence d'une multitude d'objets mathématiques tels que les
+fonctions racines, exponentielles, etc.
+\end{quotation}
+
+\medskip
+Mais rappelons-en d'abord l'énoncé ainsi qu'une démonstration possible :
+
+\proclaim{Théorème des valeurs intermédiaires}
+Soit $f : [a,b]\to \R$ une fonction réelle continue.  Si $y$ est compris
+entre $f(a)$ et $f(b)$, il existe $c\in[a,b]$ tel que $f(c)=y$.
+
+\proof
+L'intervalle $[a,b]$ est connexe, donc son image par $f$ continue est connexe.
+Comme les seuls connexes de $\R$ sont les intervalles et que $f(a)$ et $f(b)$
+sont dans $f([a,b])$, tout nombre $y$ compris entre $f(a)$ et $f(b)$ est aussi
+élément de $f([a,b])$.
+
+\smallskip\noindent
+Cette démonstration est aussi courte qu'efficace, mais il faut prendre
+garde alors, comme le fait remarquer F.~Testard dans son ouvrage cité, à ne
+pas utiliser ce théorème pour démontrer que les connexes de $\R$ sont les
+intervalles, sous peine de raisonnement circulaire !
+
+\medskip
+Considérons maintenant la réciproque de ce théorème : une fonction $f$ vérifiant
+la propriété des valeurs intermédiaires est-elle continue ? La réponse est
+négative, comme le montre classiquement la fonction définie sur $\R$ par :
+\[
+  f(x) \coloneq
+  \begin{cases}
+    \sin\left(\frac{1}{x}\right), & \text{si $x\neq0$ ;} \\
+    0,                            & \text{si $x=0$.}
+  \end{cases}
+\]
+
+Ce contre-exemple, suffisant bien sûr, semble toutefois un peu faible dans la
+mesure où $f$ n'est discontinue qu'en un seul point. Pour trouver mieux, on
+peut chercher quelle condition naturelle devrait vérifier $f$, en plus de la
+propriété des valeurs intermédiaires, pour assurer sa continuité.
+
+\noindent Par exemple :
+
+\proclaim{Théorème}
+Si $f:\R\to\R$ est une fonction injective vérifiant la propriété des
+valeurs intermédiaires, alors $f$ est continue sur $\R$.
+
+\proof
+Supposons que $f$ soit discontinue en un point $x$. Il existe alors une
+suite $(x_n)$ convergeant vers $x$, telle que la suite des $f(x_n)$ ne
+converge pas vers $f(x)$. Donc, il existe $\epsilon>0$ et une sous-suite
+$(x_{n_k})$ de $(x_n)$, telle que pour tout $n_k$,
+$f(x_{n_k})\not\in\; ]f(x)-\epsilon, f(x)+\epsilon\,[$.
+
+Quitte à extraire une sous-suite de $(x_{n_k})$, notée encore $(x_{n_k})$,
+on peut considérer que les $f(x_{n_k})$ sont,
+soit tous inférieurs à $f(x)-\epsilon$,
+soit tous supérieurs à $f(x)+\epsilon$.
+Le raisonnement étant le même dans les deux cas, supposons par exemple
+que pour tout $n_k$, $f(x_{n_k})\le f(x)-\epsilon<f(x)$.
+
+Pour tout $n_k$, il existe alors, d'après la propriété des valeurs
+intermédiaires, un réel $c_k$ compris entre $x_{n_k}$ et $x$, tel que
+$f(c_k)=f(x)-\epsilon$. Mais comme $f$ est injective, tous les $c_k$ sont
+égaux à un réel~$c$. Et comme la suite $(x_{n_k})$ tend vers $x$, on en
+déduit par encadrement que $x=c$.
+Ce qui contredit : $f(c)=f(x)-\epsilon\neq f(x)$.
+
+\medskip
+Peut-être faudrait-il considérer une fonction qui ne soit vraiment pas
+injective ? Que penser alors de la propriété suivante, où $f$ est une
+fonction définie sur $\R$ :
+
+\proclaim{Propriété (P)}
+Pour tout intervalle ouvert non vide $I\subseteq\R$, $f(I)=\R$.
+
+Il n'est pas évident qu'une fonction vérifiant (P) existe, mais supposons
+que cela soit le cas. Alors pour sûr, $f$ n'est pas injective ! Et elle
+vérifie évidemment la propriété des valeurs intermédiaires.
+Que dire de la continuité d'une telle fonction ?
+
+\proclaim{Théorème}
+Si $f : \R\to\R$ est une fonction vérifiant (P),
+alors $f$ est discontinue en tout point de~$\R$.
+
+\proof
+Supposons que $f$ soit continue en $x\in\R$, et considérons un intervalle
+$V$ ouvert de longueur finie contenant $f(x)$. Il existe alors un voisinage
+ouvert $U$ de $x$ tel que $f(U)\subseteq V$. Mais comme $f$ vérifie (P),
+$f(U)=\R$, et donc $\R\subseteq V$, ce qui contredit la longueur finie de~$V$.
+
+\medskip
+Une fonction vérifiant (P) constituerait donc, en un sens, un contre-exemple
+fort à la réciproque du théorème des valeurs intermédiaires. Mais comment
+trouver un tel monstre ?
+
+En utilisant la représentation des nombres réels en base $13$
+(quelle idée !), le mathématicien John~H.~Conway
+a construit dans ce but l'incroyable fonction présentée ci-après.
+
+\medskip
+Tout nombre réel peut s'écrire de façon unique en base $13$ sous la forme
+\[
+  \pm\, c_0c_1\ldots c_k\,.\,c_{k+1}c_{k+2}\ldots
+\]
+où $(c_n)_{n\in\N}$ est une suite d'éléments de
+$\{0, 1, \ldots, 9, A, B, C\}$, telle que si $c_0=0$, alors $k=0$ (la
+partie entière ne comporte pas de zéros inutiles), et telle que pour tout
+entier $n\ge0$, il existe un entier $m>n$ tel que $c_m\neq C$ (l'expansion
+trédécimale ne peut pas se terminer par une suite infinie de $C$).
+Ce type d'écriture unique, normalisée, existe bien sûr pour toute base.
+
+\smallskip
+On définit alors une fonction $f$ réelle de la façon suivante :
+\begin{itemize}
+\item pour tout $x$ réel écrit comme ci-dessus en base 13,
+  le signe et le point trédécimal sont ignorés ;
+\item si la fin de l'expansion trédécimale de $x$ est de la forme
+  $Ax_1x_2\ldots x_nCy_1y_2\ldots$, où tous les $x_i$ et tous les $y_i$
+  sont des chiffres décimaux, alors $f(x)=x_1x_2\ldots x_n.y_1y_2\ldots$,
+  considéré comme un nombre en base $10$ ;
+\item de façon similaire, si la fin de l'expansion de
+  $x$ est de la forme $Bx_1x_2\ldots x_nCy_1y_2\ldots$, alors
+  $f(x)=-x_1x_2\ldots x_n.y_1y_2\ldots$ ;
+\item sinon, $f(x)=0$.
+\end{itemize}
+
+\smallskip
+Quelques exemples pour fixer les idées :
+\begin{align*}
+  f(-1.23A3C14159\ldots_{13}) &= 3.14159\ldots \\
+  f(+123B4C567.00\ldots_{13}) &= -4.567 \\
+  f(+1C23A4.500\ldots_{13})   &= 0
+\end{align*}
+
+Soient maintenant un intervalle ouvert $I$ non vide de $\R$, $c$ un
+élément de $I$ et $y$ un réel quelconque.
+Partant de l'écriture normalisée de $y$ en base $10$ et de $c$ en base $13$,
+on construit alors un réel $c'$ en base $13$, en changeant, à partir
+d'un certain rang, la fin de l'expansion suivant le point
+trédécimale de $c$ en $Ay$ ou $By$, suivant le signe de $y$, et en remplaçant
+le point décimal de $y$ par $C$.
+
+En effectuant cette modification suffisamment loin dans l'expansion
+de $c$, on peut s'assurer que $c'$ est également dans
+l'intervalle $I$. Et comme par construction $f(c')=y$, on en déduit que
+$f$ vérifie la propriété (P).
+
+\begin{center}\slshape
+La fonction $f$ vérifie donc la propriété des valeurs intermédiaires en
+étant partout discontinue !
+\end{center}
+
+\end{document}
