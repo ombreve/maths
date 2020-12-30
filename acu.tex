@@ -1,0 +1,195 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[french]{babel}
+\usepackage{xspace}
+\usepackage{cancel}
+\usepackage{luamplib}
+
+\usepackage[a4paper, includefoot, textwidth=6.5in, textheight=24.956cm,
+            hmarginratio=1:1, vmarginratio=1:1,
+            footnotesep=1.5\baselineskip]{geometry}
+\usepackage[explicit]{titlesec}
+\titleformat{\section}[runin]
+  {\normalfont\bfseries}
+  {}{0pt}{#1.}
+\titlespacing{\section}{0pt}{*3}{*1.5}
+
+\usepackage{mathtools}
+\usepackage[warnings-off={mathtools-colon},
+            warnings-off={mathtools-overbracket},
+            math-style=french]{unicode-math}
+\usepackage{fontspec}
+\usepackage{microtype}
+
+\makeatletter
+\def\@maketitle{%
+  \begin{center}%
+    \let\footnote\thanks
+    {\bfseries \@title \par}%
+    \vskip .5em
+    \@author
+  \end{center}%
+  \par \vskip .5em}
+
+\renewenvironment{abstract}%
+  {\quotation\noindent\ignorespaces}%
+  {\endquotation}
+
+% Multiple footnotes
+\let\oldFootnote\footnote
+\newcommand\nextToken\relax
+\renewcommand\footnote[1]{%
+    \oldFootnote{#1}\futurelet\nextToken\isFootnote}
+\newcommand\isFootnote{%
+    \ifx\footnote\nextToken\textsuperscript{,}\fi}
+
+
+\newcommand{\N}{\ensuremath{\symbb{N}}\xspace}
+\newcommand{\Z}{\ensuremath{\symbb{Z}}\xspace}
+\newcommand{\Q}{\ensuremath{\symbb{Q}}\xspace}
+\newcommand{\mytilde}{\raise.17ex\hbox{$\scriptstyle\mathtt{\sim}$}\xspace}
+
+\AtBeginDocument{\let\ge\geqslant \let\le\leqslant}
+\makeatother
+
+\usepackage[unicode,hyperfootnotes=false,hidelinks]{hyperref}
+\hypersetup{%
+  pdftitle={B.a-ba des a.c.u.},
+  pdfauthor={Lionel Vidal}
+}
+\usepackage{bookmark}
+\title{B.a-ba des a.c.u.}
+\author{Lionel \bsc{V\kern-1pt idal}}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+  Où l'on présente une partie de la famille des anneaux
+  commutatifs unitaires (a.c.u.), ainsi que les relations particulières
+  qui unissent ses membres.
+
+  \smallskip\itshape
+  Remarque: dans tout ce qui suit, on écrira anneau pour
+  anneau commutatif unitaire.
+\end{abstract}
+
+\section{Photo de famille}
+
+Voici les anneaux protagonistes.  Les flèches se lisent ici comme des
+implications, et en pointillées, elles soulignent une relation de
+définition : par exemple, si un anneau est factoriel, alors il est
+intégralement clos, ou encore, un anneau de Dedekind est par définition
+nœthérien. Les anneaux sur fond grisé sont intègres par définition. Les
+notes précisent les domaines de validité de certaines propriétés
+arithmétiques utiles.
+
+\bigskip
+\begin{center}
+\mbox{\begin{mplibcode}
+  input boxes ;
+  beginfig(0) ;
+
+  vgap := 50 ; hgap := 60 ;
+  defaultdx := 8 ; defaultdy := 8 ;
+
+  boxit.ae(btex euclidien etex) ;
+  boxit.ap(btex principal etex) ;
+  boxit.ac(btex intégralement clos etex) ;
+  boxit.af(btex factoriel etex) ;
+  boxit.ad(btex de Dedekind etex) ;
+  boxit.ab(btex de Bézout\up{$*$ (6)} etex);
+  boxit.an(btex nœthérien\up{$*$} etex);
+  boxit.ag(btex à PGCD etex);
+  boxit.ai(btex intègre\up{(1, 2)} etex);
+
+  ae.s - ap.n = ap.s - af.n = af.s - ac.n = ac.s - ai.n = (0, vgap) ;
+  af.w - ad.e = ab.w - af.e = (hgap, 0);
+  an.e - ai.w = (whatever, 0); an.c - ad.c = (0, whatever);
+  ag.w - ai.e = (whatever, 0); ag.c - ab.c = (0, whatever);
+
+  fixsize(ae, ap, ad, af, ab, ac, ai);
+  forsuffixes s=ae,ap, ad, af, ab, ac, ai:
+    fill bpath.s withcolor 0.9white ;
+  endfor ;
+  drawboxed(ae, ap, af, ac, ad, ab, an, ag, ai);
+
+  drawarrow ae.s -- ap.n ;
+  drawarrow ap.s -- af.n ;
+  drawarrow ap.s -- ad.ne ;
+  drawarrow ap.s -- ab.nw ;
+  drawarrow af.s -- ac.n ;
+  drawarrow af.se -- ag.n ;
+  drawarrow ad.s -- an.n dashed evenly ;
+  drawarrow ad.s -- ac.nw dashed evenly ;
+  drawarrow ab.s -- ag.n ;
+  drawarrow ab.s -- ac.ne ;
+
+  boxit.adaf();
+  boxit.afab();
+  boxit.anaiag();
+  boxit.aiag();
+  adaf.nw - ad.nw = (-defaultdx, defaultdy);
+  adaf.se - af.se = (defaultdx, -defaultdy);
+  afab.nw - af.nw = (-defaultdx, defaultdy+4);
+  afab.se - ab.se = (defaultdx, -defaultdy-4);
+  anaiag.nw - an.nw = (-defaultdx, defaultdy);
+  anaiag.se - ag.se = (defaultdx, -defaultdy);
+  aiag.nw - ai.nw = (-defaultdx, defaultdy+4);
+  aiag.se - ag.se = (defaultdx+4, -defaultdy-4);
+  fixsize(adaf, afab, anaiag, aiag);
+  drawboxed(adaf, afab, anaiag, aiag);
+
+  drawarrow ad.n -- ap.sw cutbefore bpath.adaf ;
+  drawarrow ab.n -- ap.se cutbefore bpath.afab ;
+  drawarrow ai.n -- ac.s cutbefore bpath.aiag ;
+  drawarrow an.n -- af.sw cutbefore bpath.anaiag ;
+
+  x.star = xpart ab.c - 10 ; y.star = ypart ap.c ;
+  drawarrow z.star -- ap.e ;
+  label.rt(btex $*$ etex, z.star);
+
+  label.rt(btex \up{(3, 4, 5)} etex, aiag.ne);
+
+  endfig;
+\end{mplibcode}}
+\end{center}
+\bigskip
+
+\renewcommand{\labelenumi}{(\arabic{enumi}) }
+\begin{enumerate}
+\item la relation de divisibilité sur A/\mytilde (où \mytilde est la
+  relation d'équivalence qui lie deux éléments associés) est un ordre
+  (ce n'est qu'un pré-ordre si l'anneau $A$ n'est pas intègre).
+
+\item tout élément premier est irréductible.
+
+\item lemme de Gauss : si $a$ divise $bc$ et si $a$ est premier
+  avec $b$, alors $a$ divise $c$.
+
+\item lemme d'Euclide : si $p$ irréductible divise $ab$,
+  alors $p$ divise $a$ ou $b$.
+
+\item un élément est premier si et seulement si il est irréductible.
+
+\item deux éléments sont étrangers si et seulement si ils sont premiers
+  entre eux.
+\end{enumerate}
+
+\section{Défi pour algébriste motivé}
+
+Après avoir défini précisément chacun des anneaux, sauriez-vous
+démontrer toutes les propriétés et implications précédentes, et surtout
+trouver des contre-exemples pertinents aux réciproques qui justifient
+l'existence des différentes notions ?
+
+Z'avez deux heures%
+ \footnote{J'ai mis bien plus !}%
+ \footnote{On pourra consulter le
+   {\slshape Cours d'algèbre}, de D.~Perrin (le célèbre livre bleu
+   des aggrégatifs).}%
+ \footnote{Et le remarquable
+   {\slshape Théorie algébrique des nombres}, de P.~Samuel.}%
+ \footnote{Et le touffu polycopié
+   {\slshape Préparation à l'écrit 1989}, de J.-M.~Exbrayat.}%
+ !
+
+\end{document}
