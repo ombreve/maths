@@ -1,17 +1,11 @@
 \documentclass[a4paper,11pt]{article}
 \usepackage[french]{babel}
 \usepackage{xspace}
-\usepackage{cancel}
 \usepackage{luamplib}
 
 \usepackage[a4paper, includefoot, textwidth=6.5in, textheight=24.956cm,
             hmarginratio=1:1, vmarginratio=1:1,
             footnotesep=1.5\baselineskip]{geometry}
-\usepackage[explicit]{titlesec}
-\titleformat{\section}[runin]
-  {\normalfont\bfseries}
-  {}{0pt}{#1.}
-\titlespacing{\section}{0pt}{*3}{*1.5}
 
 \usepackage{mathtools}
 \usepackage[warnings-off={mathtools-colon},
@@ -43,9 +37,6 @@
     \ifx\footnote\nextToken\textsuperscript{,}\fi}
 
 
-\newcommand{\N}{\ensuremath{\symbb{N}}\xspace}
-\newcommand{\Z}{\ensuremath{\symbb{Z}}\xspace}
-\newcommand{\Q}{\ensuremath{\symbb{Q}}\xspace}
 \newcommand{\mytilde}{\raise.17ex\hbox{$\scriptstyle\mathtt{\sim}$}\xspace}
 
 \AtBeginDocument{\let\ge\geqslant \let\le\leqslant}
@@ -63,18 +54,23 @@
 \begin{document}
 \maketitle
 \begin{abstract}
-  Où l'on présente une partie de la famille des anneaux
-  commutatifs unitaires (a.c.u.), ainsi que les relations particulières
+  Un court aide-mémoire%
+  \footnote{Pour des définitions précises et des exemples
+    ou contre-exemples pertinents qui justifient l'existence des
+    différentes notions, on pourra consulter le
+    {\slshape Cours d'algèbre}, de D.~Perrin (le célèbre livre bleu
+    des agrégatifs).}%
+  \footnote{Et le remarquable
+    {\slshape Théorie algébrique des nombres}, de P.~Samuel.}%
+  \footnote{Et le touffu polycopié
+    {\slshape Préparation à l'écrit 1989}, de J.-M.~Exbrayat.}
+  sur une partie de la famille des anneaux
+  commutatifs unitaires (a.c.u.) et les relations particulières
   qui unissent ses membres.
-
-  \smallskip\itshape
-  Remarque: dans tout ce qui suit, on écrira anneau pour
-  anneau commutatif unitaire.
 \end{abstract}
 
-\section{Photo de famille}
-
-Voici les anneaux protagonistes.  Les flèches se lisent ici comme des
+\bigskip
+\noindent Les flèches se lisent ici comme des
 implications, et en pointillées, elles soulignent une relation de
 définition : par exemple, si un anneau est factoriel, alors il est
 intégralement clos, ou encore, un anneau de Dedekind est par définition
@@ -173,23 +169,5 @@ arithmétiques utiles.
 \item deux éléments sont étrangers si et seulement si ils sont premiers
   entre eux.
 \end{enumerate}
-
-\section{Défi pour algébriste motivé}
-
-Après avoir défini précisément chacun des anneaux, sauriez-vous
-démontrer toutes les propriétés et implications précédentes, et surtout
-trouver des contre-exemples pertinents aux réciproques qui justifient
-l'existence des différentes notions ?
-
-Z'avez deux heures%
- \footnote{J'ai mis bien plus !}%
- \footnote{On pourra consulter le
-   {\slshape Cours d'algèbre}, de D.~Perrin (le célèbre livre bleu
-   des aggrégatifs).}%
- \footnote{Et le remarquable
-   {\slshape Théorie algébrique des nombres}, de P.~Samuel.}%
- \footnote{Et le touffu polycopié
-   {\slshape Préparation à l'écrit 1989}, de J.-M.~Exbrayat.}%
- !
 
 \end{document}
